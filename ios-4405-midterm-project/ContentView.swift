@@ -22,7 +22,7 @@ struct ContentView: View {
             VStack(spacing: 20) {
                 Image(systemName: "cup.and.saucer.fill")
                     .font(.system(size: 100))
-                    .foregroundStyle(.brown)
+                    .foregroundStyle(.pink)
                 
                 Text("Bubble Tea Shop")
                     .font(.largeTitle).bold()
@@ -57,6 +57,3 @@ struct ContentView_Previews: PreviewProvider {
 #Preview {
     ContentView()
 }
-
-
-//@State private var cartItems = [CartItem(name: "Brown Sugar Milk Tea", price: 4.99, details: "Large, Brown Sugar, 50% Sugar"), CartItem(name: "Matcha Latte", price: 5.49, details: "Large, Matcha, 50% Sugar"), CartItem(name: "Peach Tea", price: 4.29, details: "Large, Peach, 50% Sugar")]

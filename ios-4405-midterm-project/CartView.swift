@@ -1,5 +1,5 @@
 //
-//  CustomDrinkView.swift
+//  CartView.swift
 //  ios-4405-midterm-project
 //
 //  Created by Cindy Huynh on 4/1/26.
@@ -34,16 +34,15 @@ struct CartView: View {
                 Text("Total: $\(total, specifier: "%.2f")")
                     .font(.title2).bold()
                 
-                // Link to Payment Screen
-//                NavigationLink(destination: PaymentView(cartItems: $cartItems)) {
-//                    Text("Proceed to Checkout")
-//                        .frame(maxWidth: .infinity)
-//                        .padding()
-//                        .background(cartItems.isEmpty ? Color.gray : Color.blue)
-//                        .foregroundColor(.white)
-//                        .cornerRadius(10)
-//                }
-//                .disabled(cartItems.isEmpty) // Prevent checkout if empty
+                NavigationLink(destination: PaymentView(cartItems: $cartItems)) {
+                    Text("Proceed to Checkout")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(cartItems.isEmpty ? Color.gray : Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+                .disabled(cartItems.isEmpty) // Prevent checkout if empty
             }
             .padding()
         }

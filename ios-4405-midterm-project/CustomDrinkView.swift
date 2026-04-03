@@ -8,29 +8,78 @@
 import SwiftUI
 
 struct CustomDrinkView: View {
-    @Binding var cartItems: [CartItem] // Receives cartItem
+    @Binding var cartItems: [CartItem]
     
-    // Local state for the pickers/toggles 
+    @State private var selectedDrink = "Brown Sugar Milk Tea"
+    let drinkOptions = ["Brown Sugar Milk Tea", "Matcha Latte", "Peach Tea"]
+    
     @State private var selectedSize = "Medium"
-    @State private var addBoba = false
+    @State private var addBrownSugarBoba = false
+    @State private var addLycheeJelly = false
+    @State private var addCrystalBoba = false
     @State private var quantity = 1
+    
+    var unitPrice: Double {
+        var base = 5.50
+        if addBrownSugarBoba { base += 0.50 }
+        if addLycheeJelly { base += 0.50 }
+        if addCrystalBoba { base += 0.50 }
+        return base
+    }
+    
+    var totalPrice: Double {
+        unitPrice * Double(quantity)
+    }
 
     var body: some View {
         Form {
-            Section("Customize Your Tea") {
+            Section("Choose Your Drink") {
+                Picker("Tea Type", selection: $selectedDrink) {
+                    ForEach(drinkOptions, id: \.self) {
+                        Text($0)
+                    }
+                }
+                
                 Picker("Size", selection: $selectedSize) {
                     Text("Small").tag("Small")
                     Text("Medium").tag("Medium")
                     Text("Large").tag("Large")
                 }
-                Toggle("Add Brown Sugar Boba", isOn: $addBoba)
-                Stepper("Quantity: \(quantity)", value: $quantity, in: 1...10)
             }
             
-            Button("Add to Cart") {
-                let newItem = CartItem(name: "Custom Tea", price: 5.50, details: selectedSize)
-                cartItems.append(newItem)
+            Section("Toppings") {
+                Toggle("Brown Sugar Boba (+$0.50)", isOn: $addBrownSugarBoba)
+                Toggle("Lychee Jelly (+$0.50)", isOn: $addLycheeJelly)
+                Toggle("Crystal Boba (+$0.50)", isOn: $addCrystalBoba)
             }
+            
+            Section("Order Details") {
+                Stepper("Quantity: \(quantity)", value: $quantity, in: 1...10)
+                
+                HStack {
+                    Text("Total Price")
+                    Spacer()
+                    Text("$\(totalPrice, specifier: "%.2f")")
+                        .bold()
+                }
+            }
+            
+            Button(action: {
+                for _ in 0..<quantity {
+                    let newItem = CartItem(
+                        name: selectedDrink,
+                        price: unitPrice,
+                        details: "\(selectedSize) with toppings"
+                    )
+                    cartItems.append(newItem)
+                }
+            }) {
+                Text("Add \(quantity) to Cart")
+                    .frame(maxWidth: .infinity)
+                    .alignmentGuide(.leading) { _ in 0 }
+            }
+            .buttonStyle(.borderedProminent)
         }
+        .navigationTitle("Build Your Own")
     }
 }
