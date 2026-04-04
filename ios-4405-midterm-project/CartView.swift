@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct CartView: View {
-    @Binding var cartItems: [CartItem]
+    @Binding var cartItems: [ShopItem]
+    @Environment(\.dismiss) var dismiss
     
-    // Calculated property for total price
     var total: Double {
-        cartItems.reduce(0) { $0 + $1.price }
+        cartItems.reduce(0) { $0 + $1.price } // calculates total price
     }
 
     var body: some View {
@@ -22,7 +22,7 @@ struct CartView: View {
                     HStack {
                         Text(item.name)
                         Spacer()
-                        Text("$\(item.price, specifier: "%.2f")")
+                        Text("$\(item.price, specifier: "%.2f")") // %.2f format specifier for cost in dollars
                     }
                 }
                 .onDelete { indexSet in
@@ -30,19 +30,20 @@ struct CartView: View {
                 }
             }
             
-            VStack(spacing: 15) {
-                Text("Total: $\(total, specifier: "%.2f")")
-                    .font(.title2).bold()
+            VStack(spacing: 10) {
+                Text("Total: $\(total, specifier: "%.2f")").font(.title2).bold()
                 
                 NavigationLink(destination: PaymentView(cartItems: $cartItems)) {
-                    Text("Proceed to Checkout")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(cartItems.isEmpty ? Color.gray : Color.blue)
+                    Text("Proceed to Checkout").padding().frame(maxWidth: .infinity)
+                        .background(cartItems.isEmpty ? .gray : Color(red: 0.404, green: 0.745, blue: 0.851))
                         .foregroundColor(.white)
                         .cornerRadius(10)
+                }.disabled(cartItems.isEmpty) // prevents checkout if cart is empty
+
+                Button("Add More Items") {
+                    dismiss() // returns to ContentView
                 }
-                .disabled(cartItems.isEmpty) // Prevent checkout if empty
+                .padding(.top, 5)
             }
             .padding()
         }

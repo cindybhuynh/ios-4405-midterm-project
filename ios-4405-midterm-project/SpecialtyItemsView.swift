@@ -8,23 +8,21 @@
 import SwiftUI
 
 struct SpecialtyItemsView: View {
-    @Binding var cartItems: [CartItem]
+    @Binding var cartItems: [ShopItem]
     
     let specialtyMenu = [
-        CartItem(name: "Oreo Vanilla Macarons", price: 4.00, details: "Dessert"),
-        CartItem(name: "Chocolate Strawberries", price: 5.50, details: "Dessert"),
-        CartItem(name: "Lemon Crepes", price: 5.00, details: "Dessert")
+        ShopItem(name: "Oreo Vanilla Macarons", price: 4.00, details: "Dessert"),
+        ShopItem(name: "Chocolate Strawberries", price: 5.50, details: "Dessert"),
+        ShopItem(name: "Lemon Crepes", price: 5.00, details: "Dessert")
     ]
 
     var body: some View {
         List {
             ForEach(specialtyMenu) { item in
                 HStack {
-                    // Replace "bubble-tea" with your icon name from Assets
-                    Image(systemName: "cupcake.fill")
+                    Image("cupcake")
                         .resizable()
-                        .frame(width: 50, height: 50)
-                        .foregroundStyle(.pink)
+                        .frame(width: 75, height: 75)
                     
                     VStack(alignment: .leading) {
                         Text(item.name).font(.headline)

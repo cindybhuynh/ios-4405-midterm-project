@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct OrderConfirmationView: View {
-    @Binding var cartItems: [CartItem]
+    @Binding var cartItems: [ShopItem]
 
     var body: some View {
         VStack(spacing: 20) {
@@ -29,7 +29,7 @@ struct OrderConfirmationView: View {
                 Text("Back to Home")
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(cartItems.isEmpty ? Color.gray : Color.blue)
+                    .background(Color(red: 0.404, green: 0.745, blue: 0.851))
                     .foregroundColor(.white)
                     .cornerRadius(10)
             }

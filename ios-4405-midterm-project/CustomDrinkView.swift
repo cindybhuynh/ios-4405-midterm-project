@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CustomDrinkView: View {
-    @Binding var cartItems: [CartItem]
+    @Binding var cartItems: [ShopItem]
     
     @State private var selectedDrink = "Brown Sugar Milk Tea"
     let drinkOptions = ["Brown Sugar Milk Tea", "Matcha Latte", "Peach Tea"]
@@ -66,7 +66,7 @@ struct CustomDrinkView: View {
             
             Button(action: {
                 for _ in 0..<quantity {
-                    let newItem = CartItem(
+                    let newItem = ShopItem(
                         name: selectedDrink,
                         price: unitPrice,
                         details: "\(selectedSize) with toppings"

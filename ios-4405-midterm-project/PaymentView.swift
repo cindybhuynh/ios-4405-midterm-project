@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct PaymentView: View {
-    @Binding var cartItems: [CartItem]
+    @Binding var cartItems: [ShopItem]
+    @Environment(\.dismiss) var dismiss
+    
     var total: Double { cartItems.reduce(0) { $0 + $1.price } }
 
     var body: some View {
@@ -22,13 +24,19 @@ struct PaymentView: View {
                     .font(.headline)
                     .padding()
                     .frame(maxWidth: .infinity)
-                    .background(total == 0 ? Color.gray : Color.green)
+                    .background(total == 0 ? Color.gray : Color(red: 0.286, green: 0.815, blue: 0.349))
                     .foregroundColor(.white)
                     .cornerRadius(10)
             }
-            .disabled(total == 0) // Required by rubric
+            .disabled(total == 0)
             
-            Spacer()
+            Button("Back to Cart") {
+                dismiss()
+            }
+
+            Button("Add More Items") {
+                dismiss()
+            }
         }
         .navigationTitle("Payment")
         .padding()
